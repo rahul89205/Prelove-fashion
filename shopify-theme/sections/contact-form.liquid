@@ -1,0 +1,47 @@
+<section class="section--tight section" {{ section.shopify_attributes }}>
+  <div class="container form-narrow" style="margin-left:0;margin-right:auto;max-width:620px;margin-inline:auto">
+    <h2>{{ section.settings.heading }}</h2>
+    <p>{{ section.settings.text }}</p>
+
+    {%- form 'contact', id: 'ContactForm' -%}
+      {%- if form.posted_successfully? -%}
+        <p class="form-msg form-msg--ok">Thanks – we have received your message and will reply within 2 business days.</p>
+      {%- endif -%}
+      {%- if form.errors -%}
+        <p class="form-msg form-msg--err">{{ form.errors | default_errors }}</p>
+      {%- endif -%}
+
+      <div class="field">
+        <label for="ContactName">Name</label>
+        <input id="ContactName" type="text" name="contact[name]" autocomplete="name" value="{{ form.name }}" required>
+      </div>
+      <div class="field">
+        <label for="ContactEmail">Email</label>
+        <input id="ContactEmail" type="email" name="contact[email]" autocomplete="email" value="{{ form.email }}" required>
+      </div>
+      {%- if section.settings.show_item_field -%}
+        <div class="field">
+          <label for="ContactItems">What would you like to sell?</label>
+          <input id="ContactItems" type="text" name="contact[Items]" placeholder="e.g. 8 tops, 2 coats, 3 pairs of jeans">
+        </div>
+      {%- endif -%}
+      <div class="field">
+        <label for="ContactMessage">Message</label>
+        <textarea id="ContactMessage" name="contact[body]" required>{{ form.body }}</textarea>
+      </div>
+      <button class="btn" type="submit">Send message</button>
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact form",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Get in touch" },
+    { "type": "textarea", "id": "text", "label": "Intro text", "default": "Questions about an item, an order or selling with us? Send a message and we will get back to you." },
+    { "type": "checkbox", "id": "show_item_field", "label": "Show 'What would you like to sell?' field", "default": false }
+  ],
+  "presets": [{ "name": "Contact form" }]
+}
+{% endschema %}

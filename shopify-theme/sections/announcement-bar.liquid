@@ -1,0 +1,17 @@
+<div class="announcement" {{ section.shopify_attributes }}>
+  <p>{{ section.settings.text }}</p>
+</div>
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Message",
+      "default": "Every piece is one-of-one  ·  Free NZ shipping over $100  ·  Plastic-free packaging"
+    }
+  ]
+}
+{% endschema %}

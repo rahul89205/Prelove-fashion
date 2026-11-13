@@ -1,0 +1,226 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "Pre-loved fashion · Auckland",
+        "heading": "Good clothes deserve a third life.",
+        "subheading": "Hand-picked, honestly graded second-hand fashion. Every piece is one-of-one, shipped plastic-free, and kept out of landfill.",
+        "button_label": "Shop new arrivals",
+        "button_link": "/collections/all?sort_by=created-descending",
+        "button2_label": "Our promise",
+        "button2_link": "/pages/sustainability",
+        "badge": "100% pre-loved"
+      }
+    },
+    "values": {
+      "type": "values-strip",
+      "blocks": {
+        "v1": {
+          "type": "item",
+          "settings": {
+            "icon": "recycle",
+            "text": "100% pre-loved"
+          }
+        },
+        "v2": {
+          "type": "item",
+          "settings": {
+            "icon": "box",
+            "text": "Plastic-free packaging"
+          }
+        },
+        "v3": {
+          "type": "item",
+          "settings": {
+            "icon": "tag",
+            "text": "Honest condition grading"
+          }
+        },
+        "v4": {
+          "type": "item",
+          "settings": {
+            "icon": "truck",
+            "text": "Free NZ shipping over $100"
+          }
+        }
+      },
+      "block_order": [
+        "v1",
+        "v2",
+        "v3",
+        "v4"
+      ],
+      "settings": {}
+    },
+    "categories": {
+      "type": "category-tiles",
+      "blocks": {
+        "t1": {
+          "type": "tile",
+          "settings": {
+            "label": "Outerwear",
+            "product_type": "Outerwear",
+            "blurb": "Jackets, coats & overshirts",
+            "colour": "sage"
+          }
+        },
+        "t2": {
+          "type": "tile",
+          "settings": {
+            "label": "Knitwear",
+            "product_type": "Knitwear",
+            "blurb": "Merino & wool-blend",
+            "colour": "terracotta"
+          }
+        },
+        "t3": {
+          "type": "tile",
+          "settings": {
+            "label": "Denim",
+            "product_type": "Denim",
+            "blurb": "Jeans that already have a story",
+            "colour": "blue"
+          }
+        },
+        "t4": {
+          "type": "tile",
+          "settings": {
+            "label": "Accessories",
+            "product_type": "Accessories",
+            "blurb": "Bags, scarves & more",
+            "colour": "mustard"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "settings": {
+        "heading": "Shop by category"
+      }
+    },
+    "new-in": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Just rehomed",
+        "collection": "all",
+        "products_to_show": 8,
+        "view_all_label": "View all",
+        "tight": false
+      }
+    },
+    "impact": {
+      "type": "impact",
+      "blocks": {
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "number": "220,000 t",
+            "label": "of textiles are thrown away in New Zealand every year",
+            "source": "Estimate: WasteMINZ"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "number": "1 of 1",
+            "label": "every piece is a one-off, so nothing is made that does not need to be",
+            "source": "Our model"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "number": "100%",
+            "label": "of orders ship in recycled or compostable packaging",
+            "source": "Our promise"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "settings": {
+        "eyebrow": "Why pre-loved",
+        "heading": "The most sustainable garment is the one that already exists.",
+        "text": "Buying second-hand extends the life of clothing that has already been made, and keeps it out of the landfill."
+      }
+    },
+    "how": {
+      "type": "how-it-works",
+      "blocks": {
+        "h1": {
+          "type": "step",
+          "settings": {
+            "title": "Sourced",
+            "text": "We collect quality garments from Auckland closets, so they never reach landfill."
+          }
+        },
+        "h2": {
+          "type": "step",
+          "settings": {
+            "title": "Checked & graded",
+            "text": "Each piece is inspected, cleaned and given an honest grade: Like new, Excellent or Good."
+          }
+        },
+        "h3": {
+          "type": "step",
+          "settings": {
+            "title": "Packed plastic-free",
+            "text": "Orders go out in recycled paper mailers with paper tape. No bubble wrap, no plastic bags."
+          }
+        },
+        "h4": {
+          "type": "step",
+          "settings": {
+            "title": "Loved again",
+            "text": "Finished with it? Send it back for store credit and it enters the loop again."
+          }
+        }
+      },
+      "block_order": [
+        "h1",
+        "h2",
+        "h3",
+        "h4"
+      ],
+      "settings": {
+        "heading": "How a piece gets its third life"
+      }
+    },
+    "cta": {
+      "type": "cta-banner",
+      "settings": {
+        "eyebrow": "Sell with us",
+        "heading": "Got good clothes you no longer wear?",
+        "text": "Send us your pre-loved pieces and earn store credit. We handle the photos, listing and packing, and your clothes find a new home.",
+        "button_label": "Start selling",
+        "button_link": "/pages/sell-with-us",
+        "colour": "terracotta"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "Be first to see new arrivals",
+        "text": "Every piece is one-of-one, so the good stuff goes fast. Get a heads-up when new drops land."
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "values",
+    "categories",
+    "new-in",
+    "impact",
+    "how",
+    "cta",
+    "newsletter"
+  ]
+}

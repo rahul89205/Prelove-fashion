@@ -1,0 +1,147 @@
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+
+  assign condition = ''
+  for tag in product.tags
+    if tag contains 'Condition:'
+      assign condition = tag | remove: 'Condition:' | strip
+    endif
+  endfor
+
+  assign on_sale = false
+  if current_variant.compare_at_price > current_variant.price
+    assign on_sale = true
+    assign pct_off = current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price
+  endif
+-%}
+
+<div class="container product" data-product-id="{{ product.id }}" {{ section.shopify_attributes }}>
+
+  <div class="product__gallery gallery" data-gallery>
+    <div class="gallery__main" data-gallery-main>
+      {%- if product.featured_media -%}
+        {{
+          product.featured_media
+          | image_url: width: 1100
+          | image_tag: loading: 'eager', fetchpriority: 'high', widths: '550, 800, 1100', sizes: '(min-width: 900px) 55vw, 100vw', alt: product.featured_media.alt
+        }}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </div>
+    {%- if product.media.size > 1 -%}
+      <div class="gallery__thumbs">
+        {%- for media in product.media -%}
+          {%- if media.media_type == 'image' -%}
+            <button type="button" class="gallery__thumb" data-gallery-thumb data-src="{{ media | image_url: width: 1100 }}" data-alt="{{ media.alt | escape }}" {% if forloop.first %}aria-current="true"{% endif %} aria-label="Show image {{ forloop.index }}">
+              {{ media | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+            </button>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="product__info">
+    {%- if product.vendor != blank and product.vendor != shop.name -%}
+      <p class="product__vendor">{{ product.vendor }}</p>
+    {%- endif -%}
+    <h1 class="product__title">{{ product.title }}</h1>
+
+    <div class="product__price">
+      <div class="price{% if on_sale %} price--sale{% endif %}">
+        <span class="price__now">{{ current_variant.price | money }}</span>
+        {%- if on_sale -%}
+          <s class="price__was">{{ current_variant.compare_at_price | money }}</s>
+          <span class="save-pill">{{ pct_off }}% off new</span>
+        {%- endif -%}
+      </div>
+      {%- if on_sale -%}
+        <p style="font-size:.8rem;font-weight:400;color:rgba(0,0,0,.55);margin:.3rem 0 0">Crossed-out price is the estimated price when new.</p>
+      {%- endif -%}
+    </div>
+
+    <div class="chips">
+      {%- if condition != blank -%}
+        <span class="chip">{% render 'icon', name: 'tag' %} Condition: {{ condition }}</span>
+      {%- endif -%}
+      <span class="chip">{% render 'icon', name: 'recycle' %} Pre-loved</span>
+      <span class="chip">{% render 'icon', name: 'heart' %} One-of-one</span>
+    </div>
+
+    {%- if current_variant.available and current_variant.inventory_management == 'shopify' and current_variant.inventory_quantity > 0 and current_variant.inventory_quantity < 3 -%}
+      <p class="stock-note">Only {{ current_variant.inventory_quantity }} available &ndash; once it is gone, it is gone.</p>
+    {%- endif -%}
+
+    <div class="product__buy">
+      {%- form 'product', product, id: 'ProductForm' -%}
+        {%- if product.has_only_default_variant -%}
+          <input type="hidden" name="id" value="{{ current_variant.id }}">
+        {%- else -%}
+          <div class="field">
+            <label for="VariantSelect">{% for option in product.options %}{{ option }}{% unless forloop.last %} / {% endunless %}{% endfor %}</label>
+            <select id="VariantSelect" name="id">
+              {%- for variant in product.variants -%}
+                <option value="{{ variant.id }}" {% if variant == current_variant %}selected{% endif %} {% unless variant.available %}disabled{% endunless %}>
+                  {{ variant.title }}{% unless variant.available %} – sold out{% endunless %} – {{ variant.price | money }}
+                </option>
+              {%- endfor -%}
+            </select>
+          </div>
+        {%- endif -%}
+
+        <button class="btn btn--block" type="submit" name="add" {% unless current_variant.available %}disabled{% endunless %}>
+          {%- if current_variant.available -%}Add to bag{%- else -%}Sold &ndash; this piece has found a home{%- endif -%}
+        </button>
+      {%- endform -%}
+    </div>
+
+    <div class="product__eco">
+      {% render 'icon', name: 'leaf' %}
+      <p><strong>{{ section.settings.eco_title }}</strong><br>{{ section.settings.eco_text }}</p>
+    </div>
+
+    <div class="accordion">
+      {%- if product.description != blank -%}
+        <details open>
+          <summary>Details</summary>
+          <div class="accordion__body">{{ product.description }}</div>
+        </details>
+      {%- endif -%}
+      <details>
+        <summary>Condition guide</summary>
+        <div class="accordion__body">{{ section.settings.condition_guide }}</div>
+      </details>
+      <details>
+        <summary>Shipping &amp; returns</summary>
+        <div class="accordion__body">{{ section.settings.shipping_text }}</div>
+      </details>
+    </div>
+  </div>
+</div>
+
+<script type="application/ld+json">
+  {{ product | structured_data }}
+</script>
+
+{% schema %}
+{
+  "name": "Product page",
+  "settings": [
+    { "type": "text", "id": "eco_title", "label": "Sustainability box title", "default": "Saved from landfill" },
+    { "type": "textarea", "id": "eco_text", "label": "Sustainability box text", "default": "Buying this pre-loved piece extends the life of a garment that already exists. It ships in recycled, plastic-free packaging." },
+    {
+      "type": "richtext",
+      "id": "condition_guide",
+      "label": "Condition guide",
+      "default": "<p><strong>Like new:</strong> worn once or twice, no visible wear.</p><p><strong>Excellent:</strong> lightly worn with minor signs of use only.</p><p><strong>Good:</strong> clearly worn but sound. Any flaws are described in the details.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "shipping_text",
+      "label": "Shipping & returns",
+      "default": "<p>Free NZ shipping over $100, otherwise flat-rate courier. Orders are packed in recycled paper mailers within 2 business days.</p><p>Returns accepted within 7 days of delivery for unworn items in the condition they were sent. Contact us to arrange.</p>"
+    }
+  ]
+}
+{% endschema %}

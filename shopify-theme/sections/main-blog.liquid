@@ -1,0 +1,31 @@
+<div class="container" {{ section.shopify_attributes }}>
+  <header class="collection-head"><h1>{{ blog.title }}</h1></header>
+  {%- paginate blog.articles by 9 -%}
+    <ul class="grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">
+      {%- for article in blog.articles -%}
+        <li>
+          <a class="card__media" href="{{ article.url }}" style="aspect-ratio:3/2">
+            {%- if article.image -%}
+              {{ article.image | image_url: width: 640 | image_tag: loading: 'lazy', alt: article.title }}
+            {%- else -%}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </a>
+          <div class="card__body">
+            <p class="card__meta">{{ article.published_at | date: '%-d %B %Y' }}</p>
+            <h3 class="card__title"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+            <p class="card__meta">{{ article.excerpt_or_content | strip_html | truncate: 120 }}</p>
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+    {% render 'pagination', paginate: paginate %}
+  {%- endpaginate -%}
+  <div style="height:72px"></div>
+</div>
+
+{% schema %}
+{
+  "name": "Blog page"
+}
+{% endschema %}

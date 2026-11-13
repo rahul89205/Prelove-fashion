@@ -1,0 +1,146 @@
+{
+  "sections": {
+    "intro": {
+      "type": "rich-text",
+      "settings": {
+        "eyebrow": "Our promise",
+        "heading": "Fashion without the footprint",
+        "text": "<p>Making a brand-new garment takes land, water, energy and labour. The most sustainable piece in your wardrobe is the one that already exists. That is the whole idea behind our store.</p>",
+        "centre": false
+      }
+    },
+    "impact": {
+      "type": "impact",
+      "blocks": {
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "number": "220,000 t",
+            "label": "of textiles are thrown away in New Zealand every year",
+            "source": "Estimate: WasteMINZ"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "number": "1 of 1",
+            "label": "every piece is a one-off, so nothing is made that does not need to be",
+            "source": "Our model"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "number": "100%",
+            "label": "of orders ship in recycled or compostable packaging",
+            "source": "Our promise"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "settings": {
+        "eyebrow": "The problem",
+        "heading": "Too many good clothes end up in landfill.",
+        "text": "Most of New Zealand's discarded clothing is still wearable. We give it somewhere better to go."
+      }
+    },
+    "how": {
+      "type": "how-it-works",
+      "blocks": {
+        "h1": {
+          "type": "step",
+          "settings": {
+            "title": "Source locally",
+            "text": "Pieces come from Auckland closets and clear-outs, with no overseas shipping of stock."
+          }
+        },
+        "h2": {
+          "type": "step",
+          "settings": {
+            "title": "Clean & repair",
+            "text": "Items are washed and given small repairs, such as a new button or a mended seam, before listing."
+          }
+        },
+        "h3": {
+          "type": "step",
+          "settings": {
+            "title": "Pack with care",
+            "text": "Recycled paper mailers, paper tape and recycled-card labels. Nothing plastic."
+          }
+        },
+        "h4": {
+          "type": "step",
+          "settings": {
+            "title": "Close the loop",
+            "text": "Customers can return pieces for store credit, so garments keep circulating."
+          }
+        }
+      },
+      "block_order": [
+        "h1",
+        "h2",
+        "h3",
+        "h4"
+      ],
+      "settings": {
+        "heading": "What we do differently"
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "Is buying second-hand really more sustainable?",
+            "answer": "<p>Yes. Every garment you buy pre-loved is one that does not need to be made from scratch, and one that does not go to landfill. Wearing a piece for longer is one of the most effective ways to lower its environmental impact.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "How do you grade condition?",
+            "answer": "<p>Like new: worn once or twice, no visible wear. Excellent: lightly worn with minor signs of use only. Good: clearly worn but sound; any flaws are listed on the product page.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "What happens to items you cannot sell?",
+            "answer": "<p>Unsold pieces are donated to local charity shops or passed on to a textile recycler. We aim for nothing to go to landfill.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3"
+      ],
+      "settings": {
+        "heading": "Good questions"
+      }
+    },
+    "cta": {
+      "type": "cta-banner",
+      "settings": {
+        "eyebrow": "Join the loop",
+        "heading": "Pass your good clothes on",
+        "text": "Send us the pieces you no longer wear and earn store credit.",
+        "button_label": "Sell with us",
+        "button_link": "/pages/sell-with-us",
+        "colour": "sage"
+      }
+    }
+  },
+  "order": [
+    "intro",
+    "impact",
+    "how",
+    "faq",
+    "cta"
+  ]
+}

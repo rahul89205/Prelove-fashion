@@ -1,0 +1,36 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Thrice Loved",
+    "theme_version": "1.0.0",
+    "theme_author": "Thrice Loved",
+    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
+    "theme_support_url": "https://help.shopify.com/support"
+  },
+  {
+    "name": "Brand colours",
+    "settings": [
+      { "type": "color", "id": "color_bg", "label": "Background (cream)", "default": "#F6F1E7" },
+      { "type": "color", "id": "color_ink", "label": "Text", "default": "#1B1B1B" },
+      { "type": "color", "id": "color_primary", "label": "Primary (forest green)", "default": "#1F3D2F" },
+      { "type": "color", "id": "color_accent", "label": "Accent (terracotta)", "default": "#C65D3B" },
+      { "type": "color", "id": "color_sand", "label": "Sand", "default": "#E8DCC8" },
+      { "type": "color", "id": "color_sage", "label": "Sage", "default": "#A9B8A0" }
+    ]
+  },
+  {
+    "name": "Logo & favicon",
+    "settings": [
+      { "type": "image_picker", "id": "logo", "label": "Logo image (optional – store name is shown if empty)" },
+      { "type": "image_picker", "id": "favicon", "label": "Favicon (32 x 32 px PNG)" }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      { "type": "url", "id": "social_instagram", "label": "Instagram" },
+      { "type": "url", "id": "social_tiktok", "label": "TikTok" },
+      { "type": "url", "id": "social_facebook", "label": "Facebook" }
+    ]
+  }
+]

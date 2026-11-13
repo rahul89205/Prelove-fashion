@@ -1,0 +1,57 @@
+<header class="header" {{ section.shopify_attributes }}>
+  <div class="container header__inner">
+
+    <details class="mobile-nav">
+      <summary aria-label="Open menu">{% render 'icon', name: 'menu' %}</summary>
+      <nav class="mobile-nav__panel" aria-label="Mobile">
+        {%- for block in section.blocks -%}
+          <a href="{{ block.settings.url | default: '/' }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+        {%- endfor -%}
+      </nav>
+    </details>
+
+    <nav class="nav" aria-label="Main">
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.url | default: '/' }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+      {%- endfor -%}
+    </nav>
+
+    <a class="logo" href="{{ routes.root_url }}">
+      {%- if settings.logo != blank -%}
+        {{ settings.logo | image_url: width: 320 | image_tag: alt: shop.name, loading: 'eager' }}
+      {%- else -%}
+        <span class="logo__dot" aria-hidden="true"></span>
+        <span>{{ shop.name }}</span>
+      {%- endif -%}
+    </a>
+
+    <div class="header__icons">
+      <a class="icon-btn" href="{{ routes.search_url }}" aria-label="Search">{% render 'icon', name: 'search' %}</a>
+      {%- if shop.customer_accounts_enabled -%}
+        <a class="icon-btn" href="{{ routes.account_url }}" aria-label="Account">{% render 'icon', name: 'user' %}</a>
+      {%- endif -%}
+      <a class="icon-btn" href="{{ routes.cart_url }}" aria-label="Bag, {{ cart.item_count }} items">
+        {% render 'icon', name: 'bag' %}
+        <span class="cart-count" data-empty="{% if cart.item_count == 0 %}true{% else %}false{% endif %}">{{ cart.item_count }}</span>
+      </a>
+    </div>
+
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Menu link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Link" },
+        { "type": "url", "id": "url", "label": "Link" }
+      ]
+    }
+  ]
+}
+{% endschema %}

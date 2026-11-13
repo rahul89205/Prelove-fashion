@@ -1,0 +1,30 @@
+<div class="container" {{ section.shopify_attributes }}>
+  <header class="collection-head">
+    <h1>Collections</h1>
+  </header>
+  <ul class="grid" style="padding-bottom:72px">
+    {%- for collection in collections -%}
+      {%- if collection.handle != 'frontpage' -%}
+        <li>
+          <a class="card__media" href="{{ collection.url }}">
+            {%- if collection.featured_image -%}
+              {{ collection.featured_image | image_url: width: 640 | image_tag: loading: 'lazy', alt: collection.title }}
+            {%- else -%}
+              {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </a>
+          <div class="card__body">
+            <h3 class="card__title"><a href="{{ collection.url }}">{{ collection.title }}</a></h3>
+            <p class="card__meta">{{ collection.products_count }} pieces</p>
+          </div>
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+  </ul>
+</div>
+
+{% schema %}
+{
+  "name": "Collection list page"
+}
+{% endschema %}

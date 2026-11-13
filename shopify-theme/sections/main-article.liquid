@@ -1,0 +1,17 @@
+<article class="container" {{ section.shopify_attributes }} style="max-width:780px">
+  <header class="page-title">
+    <p class="card__meta">{{ article.published_at | date: '%-d %B %Y' }}</p>
+    <h1>{{ article.title }}</h1>
+  </header>
+  {%- if article.image -%}
+    <div style="margin-bottom:28px">{{ article.image | image_url: width: 1200 | image_tag: loading: 'eager', alt: article.title, style: 'border-radius:20px' }}</div>
+  {%- endif -%}
+  <div class="rte" style="padding-bottom:48px">{{ article.content }}</div>
+  <p style="padding-bottom:72px"><a class="link-arrow" href="{{ blog.url }}">&larr; Back to {{ blog.title }}</a></p>
+</article>
+
+{% schema %}
+{
+  "name": "Article page"
+}
+{% endschema %}

@@ -1,0 +1,71 @@
+{%- comment -%}
+  Product card. Usage: {% render 'product-card', product: product %}
+  Condition grade comes from a product tag such as "Condition: Like new".
+{%- endcomment -%}
+{%- liquid
+  assign condition = ''
+  for tag in product.tags
+    if tag contains 'Condition:'
+      assign condition = tag | remove: 'Condition:' | strip
+    endif
+  endfor
+
+  assign size_text = ''
+  for option in product.options_with_values
+    if option.name == 'Size'
+      assign size_text = option.values | join: ', '
+    endif
+  endfor
+
+  assign on_sale = false
+  if product.compare_at_price > product.price
+    assign on_sale = true
+    assign pct_off = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price
+  endif
+-%}
+<article class="card">
+  <div class="card__badges">
+    {%- unless product.available -%}
+      <span class="badge badge--sold">Sold</span>
+    {%- else -%}
+      {%- if condition != blank -%}
+        <span class="badge badge--{{ condition | handleize }}">{{ condition }}</span>
+      {%- endif -%}
+    {%- endunless -%}
+    {%- if on_sale and product.available -%}
+      <span class="badge badge--sale">{{ pct_off }}% off new</span>
+    {%- endif -%}
+  </div>
+
+  <a class="card__media" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+    {%- if product.featured_media -%}
+      {{
+        product.featured_media
+        | image_url: width: 640
+        | image_tag: loading: 'lazy', widths: '320, 480, 640', sizes: '(min-width: 1100px) 25vw, (min-width: 700px) 33vw, 50vw', alt: product.title
+      }}
+      {%- if product.media.size > 1 -%}
+        {{
+          product.media[1]
+          | image_url: width: 640
+          | image_tag: loading: 'lazy', class: 'card__alt', widths: '320, 480, 640', sizes: '(min-width: 1100px) 25vw, (min-width: 700px) 33vw, 50vw', alt: ''
+        }}
+      {%- endif -%}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </a>
+
+  <div class="card__body">
+    <h3 class="card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    {%- if size_text != blank -%}
+      <p class="card__meta">Size {{ size_text }}</p>
+    {%- endif -%}
+    <div class="price{% if on_sale %} price--sale{% endif %}">
+      <span class="price__now">{{ product.price | money }}</span>
+      {%- if on_sale -%}
+        <s class="price__was">{{ product.compare_at_price | money }}</s>
+      {%- endif -%}
+    </div>
+  </div>
+</article>

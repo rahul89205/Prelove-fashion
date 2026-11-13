@@ -1,0 +1,40 @@
+{%- liquid
+  assign source = section.settings.collection
+  if source == blank
+    assign source = collections['all']
+  endif
+-%}
+<section class="section{% if section.settings.tight %} section--tight{% endif %}" {{ section.shopify_attributes }}>
+  <div class="container">
+    <div class="section-head">
+      <h2>{{ section.settings.title }}</h2>
+      {%- if section.settings.view_all_label != blank -%}
+        <a class="link-arrow" href="{{ source.url }}">{{ section.settings.view_all_label }}</a>
+      {%- endif -%}
+    </div>
+
+    {%- if source.products.size > 0 -%}
+      <ul class="grid">
+        {%- for product in source.products limit: section.settings.products_to_show -%}
+          <li>{% render 'product-card', product: product %}</li>
+        {%- endfor -%}
+      </ul>
+    {%- else -%}
+      <p class="center">No products yet &ndash; import your products and they will appear here.</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured products",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Heading", "default": "Just rehomed" },
+    { "type": "collection", "id": "collection", "label": "Collection", "info": "Leave empty to show all products (newest first)." },
+    { "type": "range", "id": "products_to_show", "label": "Products to show", "min": 2, "max": 12, "step": 1, "default": 8 },
+    { "type": "text", "id": "view_all_label", "label": "'View all' link label", "default": "View all" },
+    { "type": "checkbox", "id": "tight", "label": "Reduce vertical spacing", "default": false }
+  ],
+  "presets": [{ "name": "Featured products" }]
+}
+{% endschema %}

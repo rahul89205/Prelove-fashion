@@ -1,0 +1,68 @@
+{
+  "sections": {
+    "intro": {
+      "type": "rich-text",
+      "settings": {
+        "eyebrow": "Sell with us",
+        "heading": "Turn your wardrobe into store credit",
+        "text": "<p>Have good-quality clothes you no longer wear? Send them our way. We photograph, list and pack each piece, and you earn store credit when it sells.</p>",
+        "centre": false
+      }
+    },
+    "how": {
+      "type": "how-it-works",
+      "blocks": {
+        "h1": {
+          "type": "step",
+          "settings": {
+            "title": "Tell us what you have",
+            "text": "Fill in the form below with a short description of your items."
+          }
+        },
+        "h2": {
+          "type": "step",
+          "settings": {
+            "title": "We review",
+            "text": "We reply within 2 business days with what we can accept and the credit on offer."
+          }
+        },
+        "h3": {
+          "type": "step",
+          "settings": {
+            "title": "Send or drop off",
+            "text": "Post your parcel in reused packaging, or arrange a drop-off in Auckland."
+          }
+        },
+        "h4": {
+          "type": "step",
+          "settings": {
+            "title": "Earn credit",
+            "text": "When your pieces sell, store credit lands in your account to spend on your next find."
+          }
+        }
+      },
+      "block_order": [
+        "h1",
+        "h2",
+        "h3",
+        "h4"
+      ],
+      "settings": {
+        "heading": "How it works"
+      }
+    },
+    "form": {
+      "type": "contact-form",
+      "settings": {
+        "heading": "Tell us what you would like to sell",
+        "text": "We accept clean, good-quality women's, men's and unisex clothing and accessories.",
+        "show_item_field": true
+      }
+    }
+  },
+  "order": [
+    "intro",
+    "how",
+    "form"
+  ]
+}

@@ -1,0 +1,29 @@
+<section class="section newsletter center" {{ section.shopify_attributes }}>
+  <div class="container">
+    <h2>{{ section.settings.heading }}</h2>
+    <p class="lead">{{ section.settings.text }}</p>
+    {%- form 'customer', id: 'NewsletterForm' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <label class="visually-hidden" for="NewsletterEmail">Email address</label>
+      <input id="NewsletterEmail" type="email" name="contact[email]" placeholder="you@email.com" required autocomplete="email" value="{{ form.email }}">
+      <button class="btn" type="submit">Subscribe</button>
+      {%- if form.posted_successfully? -%}
+        <p class="form-msg form-msg--ok" style="width:100%">Thanks for subscribing – check your inbox!</p>
+      {%- endif -%}
+      {%- if form.errors -%}
+        <p class="form-msg form-msg--err" style="width:100%">{{ form.errors | default_errors }}</p>
+      {%- endif -%}
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Be first to see new arrivals" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Every piece is one-of-one, so the good stuff goes fast. Get a heads-up when new drops land." }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

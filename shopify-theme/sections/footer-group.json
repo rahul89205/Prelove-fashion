@@ -1,0 +1,37 @@
+{
+  "name": "Footer group",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "col-1": {
+          "type": "column",
+          "settings": {
+            "heading": "Shop",
+            "links": "Shop all | /collections/all\nNew in | /collections/all?sort_by=created-descending\nOuterwear | /collections/types?q=Outerwear\nDenim | /collections/types?q=Denim\nAccessories | /collections/types?q=Accessories"
+          }
+        },
+        "col-2": {
+          "type": "column",
+          "settings": {
+            "heading": "Thrice Loved",
+            "links": "Our sustainability promise | /pages/sustainability\nSell with us | /pages/sell-with-us\nContact | /pages/contact"
+          }
+        },
+        "col-3": {
+          "type": "column",
+          "settings": {
+            "heading": "Help",
+            "links": "Search | /search\nYour bag | /cart"
+          }
+        }
+      },
+      "block_order": ["col-1", "col-2", "col-3"],
+      "settings": {
+        "about": "Pre-loved fashion from Auckland. Every piece is hand-picked, honestly graded and given a third life – so good clothes stay out of landfill."
+      }
+    }
+  },
+  "order": ["footer"]
+}

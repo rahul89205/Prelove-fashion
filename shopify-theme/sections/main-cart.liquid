@@ -1,0 +1,82 @@
+<div class="container cart" {{ section.shopify_attributes }}>
+  <h1>Your bag</h1>
+
+  {%- if cart.item_count == 0 -%}
+    <div class="empty">
+      <p class="lead" style="margin-inline:auto">Your bag is empty &ndash; but there are plenty of one-of-one pieces waiting for a new home.</p>
+      <a class="btn" href="{{ routes.all_products_collection_url }}">Start shopping</a>
+    </div>
+  {%- else -%}
+    <form action="{{ routes.cart_url }}" method="post" id="CartForm">
+      <div class="cart__layout">
+
+        <ul class="cart__items">
+          {%- for item in cart.items -%}
+            <li class="cart__item">
+              <a href="{{ item.url }}">
+                {%- if item.image -%}
+                  {{ item.image | image_url: width: 240 | image_tag: loading: 'lazy', alt: item.product.title }}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+              </a>
+              <div>
+                <a href="{{ item.url }}" style="font-weight:600;text-decoration:none">{{ item.product.title }}</a>
+                {%- unless item.product.has_only_default_variant -%}
+                  <p class="card__meta">{{ item.variant.title }}</p>
+                {%- endunless -%}
+                {%- for discount in item.line_level_discount_allocations -%}
+                  <p class="card__meta" style="color:var(--accent)">{{ discount.discount_application.title }} (-{{ discount.amount | money }})</p>
+                {%- endfor -%}
+                <div class="price" style="margin-top:.4rem">
+                  <span class="price__now">{{ item.final_price | money }}</span>
+                  {%- if item.original_price > item.final_price -%}
+                    <s class="price__was">{{ item.original_price | money }}</s>
+                  {%- endif -%}
+                </div>
+              </div>
+              <div class="cart__line">
+                <label class="visually-hidden" for="Qty-{{ item.index }}">Quantity for {{ item.product.title | escape }}</label>
+                <input class="cart__qty" id="Qty-{{ item.index }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0" inputmode="numeric">
+                <a class="cart__remove" href="{{ item.url_to_remove }}">Remove</a>
+                <strong>{{ item.final_line_price | money }}</strong>
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+
+        <div class="cart__summary">
+          <div class="field" style="margin:0">
+            <label for="CartNote">Order note (optional)</label>
+            <textarea id="CartNote" name="note" style="min-height:80px">{{ cart.note }}</textarea>
+          </div>
+          <div class="cart__total">
+            <span>Subtotal</span>
+            <span>{{ cart.total_price | money }}</span>
+          </div>
+          <p class="cart__note">
+            {%- if cart.cart_level_discount_applications.size > 0 -%}
+              {%- for discount in cart.cart_level_discount_applications -%}
+                {{ discount.title }} (-{{ discount.total_allocated_amount | money }}).{{ ' ' }}
+              {%- endfor -%}
+            {%- endif -%}
+            Taxes included where applicable. Shipping is calculated at checkout.
+          </p>
+          <button class="btn btn--accent btn--block" type="submit" name="checkout">Checkout</button>
+          <button class="btn btn--ghost btn--block" type="submit" name="update">Update bag</button>
+          <p class="cart__note" style="display:flex;gap:.5rem;align-items:center;margin:0">
+            <span style="width:20px;color:var(--primary)">{% render 'icon', name: 'box' %}</span>
+            Ships in recycled, plastic-free packaging.
+          </p>
+        </div>
+
+      </div>
+    </form>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Cart page"
+}
+{% endschema %}

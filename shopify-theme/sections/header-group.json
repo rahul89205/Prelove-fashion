@@ -1,0 +1,24 @@
+{
+  "name": "Header group",
+  "type": "header",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "settings": {
+        "text": "Every piece is one-of-one  ·  Free NZ shipping over $100  ·  Plastic-free packaging"
+      }
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "link-1": { "type": "link", "settings": { "label": "Shop all", "url": "/collections/all" } },
+        "link-2": { "type": "link", "settings": { "label": "New in", "url": "/collections/all?sort_by=created-descending" } },
+        "link-3": { "type": "link", "settings": { "label": "Sustainability", "url": "/pages/sustainability" } },
+        "link-4": { "type": "link", "settings": { "label": "Sell with us", "url": "/pages/sell-with-us" } }
+      },
+      "block_order": ["link-1", "link-2", "link-3", "link-4"],
+      "settings": {}
+    }
+  },
+  "order": ["announcement-bar", "header"]
+}

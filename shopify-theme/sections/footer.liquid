@@ -1,0 +1,92 @@
+<footer class="footer" {{ section.shopify_attributes }}>
+  <div class="container">
+    <div class="footer__grid">
+
+      <div>
+        <a class="logo" href="{{ routes.root_url }}">
+          <span class="logo__dot" aria-hidden="true"></span>
+          <span>{{ shop.name }}</span>
+        </a>
+        <p class="footer__about">{{ section.settings.about }}</p>
+        <div class="footer__social">
+          {%- if settings.social_instagram != blank -%}
+            <a class="icon-btn" href="{{ settings.social_instagram }}" aria-label="Instagram" rel="noopener" target="_blank">{% render 'icon', name: 'instagram' %}</a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- for block in section.blocks -%}
+        <div {{ block.shopify_attributes }}>
+          <h4>{{ block.settings.heading }}</h4>
+          <ul>
+            {%- assign lines = block.settings.links | newline_to_br | split: '<br />' -%}
+            {%- for line in lines -%}
+              {%- assign parts = line | strip | split: '|' -%}
+              {%- if parts.size > 1 -%}
+                <li><a href="{{ parts[1] | strip }}">{{ parts[0] | strip }}</a></li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endfor -%}
+
+      <div>
+        <h4>Join the loop</h4>
+        <p style="font-size:.92rem">New arrivals, drops and sustainability tips. No spam.</p>
+        {%- form 'customer', id: 'FooterNewsletter' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <label class="visually-hidden" for="FooterEmail">Email</label>
+          <input id="FooterEmail" type="email" name="contact[email]" placeholder="you@email.com" required autocomplete="email" value="{{ form.email }}">
+          <button class="btn" type="submit">Subscribe</button>
+          {%- if form.posted_successfully? -%}
+            <p class="form-msg" style="width:100%">Thanks for subscribing!</p>
+          {%- endif -%}
+          {%- if form.errors -%}
+            <p class="form-msg" style="width:100%">{{ form.errors | default_errors }}</p>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+
+    </div>
+
+    <div class="footer__bottom">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. Pre-loved, never wasted.</span>
+      <div class="payment-icons">
+        {%- for type in shop.enabled_payment_types -%}
+          {{ type | payment_type_svg_tag: class: 'icon' }}
+        {%- endfor -%}
+      </div>
+      <span>{{ powered_by_link }}</span>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "about",
+      "label": "About text",
+      "default": "Pre-loved fashion from Auckland. Every piece is hand-picked, honestly graded and given a third life."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Link column",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Links" },
+        {
+          "type": "textarea",
+          "id": "links",
+          "label": "Links (one per line: Label | /url)",
+          "default": "Shop all | /collections/all"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

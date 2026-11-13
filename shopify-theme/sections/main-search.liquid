@@ -1,0 +1,36 @@
+<div class="container" {{ section.shopify_attributes }}>
+  <header class="collection-head">
+    <h1>Search</h1>
+    <form action="{{ routes.search_url }}" method="get" role="search" style="display:flex;gap:.6rem;max-width:560px;margin-top:1rem">
+      <label class="visually-hidden" for="SearchInput">Search</label>
+      <input id="SearchInput" type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search for denim, knitwear, a size…">
+      <input type="hidden" name="type" value="product">
+      <button class="btn" type="submit">Search</button>
+    </form>
+  </header>
+
+  {%- if search.performed -%}
+    {%- paginate search.results by 12 -%}
+      <p class="toolbar__count" style="margin-bottom:24px">{{ search.results_count }} result{% if search.results_count != 1 %}s{% endif %} for &ldquo;{{ search.terms | escape }}&rdquo;</p>
+      {%- if search.results.size > 0 -%}
+        <ul class="grid">
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              <li>{% render 'product-card', product: item %}</li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+        {% render 'pagination', paginate: paginate %}
+      {%- else -%}
+        <div class="empty"><p>No matches. Try a different word, or <a href="{{ routes.all_products_collection_url }}">browse everything</a>.</p></div>
+      {%- endif -%}
+    {%- endpaginate -%}
+  {%- endif -%}
+  <div style="height:72px"></div>
+</div>
+
+{% schema %}
+{
+  "name": "Search page"
+}
+{% endschema %}
