@@ -333,7 +333,9 @@ const icon = {
  leaf:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8 5-14 15-14 0 10-6 15-14 15"/><path d="M5 19c3-5 6-8 10-10"/></svg>',
  heart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-8-5-8-11a4.5 4.5 0 0 1 8-2.5A4.5 4.5 0 0 1 20 9c0 6-8 11-8 11z"/></svg>'
 };
-const links = [['Shop all','#/shop'],['New in','#/shop/new'],['Sustainability','#/sustainability'],['Sell with us','#/sell']];
+
+const links = [['Shop all','#/shop'],['New in','#/shop/new'],['Sustainability','#/sustainability'],['Sell with us','#/sell'],['Contact Us','#/contact']];
+
 
 const header = () => `
 <div class="announcement"><p>Every piece is one-of-one &nbsp;·&nbsp; Free NZ shipping over $100 &nbsp;·&nbsp; Plastic-free packaging</p></div>
@@ -495,6 +497,36 @@ ${how('What we do differently',[['Source locally','Pieces come from Auckland clo
 ${how('How it works',[['Tell us what you have','Fill in the form below with a short description of your items.'],['We review','We reply within 2 business days with what we can accept and the credit on offer.'],['Send or drop off','Post your parcel in reused packaging, or arrange a drop-off in Auckland.'],['Earn credit','When your pieces sell, store credit lands in your account.']])}
 <section class="section section--tight"><div class="container" style="max-width:620px"><h2>Tell us what you would like to sell</h2>
 <form onsubmit="event.preventDefault();toast('Thanks – we will reply within 2 business days.')"><div class="field"><label>Name</label><input type="text" required></div><div class="field"><label>Email</label><input type="email" required></div><div class="field"><label>What would you like to sell?</label><input type="text" placeholder="e.g. 8 tops, 2 coats, 3 pairs of jeans"></div><div class="field"><label>Message</label><textarea></textarea></div><button class="btn">Send message</button></form></div></section>`
+
+contact: () => `
+<section class="section">
+  <div class="container" style="max-width:650px">
+    <h1>Contact Us</h1>
+    <p>Have a question? Get in touch with the Thrice Loved team.</p>
+    <form onsubmit="event.preventDefault();toast('Thank you! Your message has been entered.');">
+      <div class="field">
+        <label>Name</label>
+        <input type="text" name="name" required>
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" name="email" required>
+      </div>
+      <div class="field">
+        <label>Subject</label>
+        <input type="text" name="subject" required>
+      </div>
+      <div class="field">
+        <label>Message</label>
+        <textarea name="message" rows="5" required></textarea>
+      </div>
+      <button class="btn" type="submit">Send Message</button>
+    </form>
+    <p id="contact-status" role="status" aria-live="polite"></p>
+  </div>
+</section>
+`,
+
 };
 
 function toast(msg){ const t=document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3200); }
