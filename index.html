@@ -333,9 +333,7 @@ const icon = {
  leaf:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8 5-14 15-14 0 10-6 15-14 15"/><path d="M5 19c3-5 6-8 10-10"/></svg>',
  heart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-8-5-8-11a4.5 4.5 0 0 1 8-2.5A4.5 4.5 0 0 1 20 9c0 6-8 11-8 11z"/></svg>'
 };
-
 const links = [['Shop all','#/shop'],['New in','#/shop/new'],['Sustainability','#/sustainability'],['Sell with us','#/sell'],['Contact Us','#/contact']];
-
 
 const header = () => `
 <div class="announcement"><p>Every piece is one-of-one &nbsp;·&nbsp; Free NZ shipping over $100 &nbsp;·&nbsp; Plastic-free packaging</p></div>
@@ -352,7 +350,7 @@ const footer = () => `
  <div><a class="logo" href="#/"><span class="logo__dot"></span><span>Thrice Loved</span></a><p class="footer__about">Pre-loved fashion from Auckland. Every piece is hand-picked, honestly graded and given a third life.</p></div>
  <div><h4>Shop</h4><ul><li><a href="#/shop">Shop all</a></li><li><a href="#/shop/new">New in</a></li><li><a href="#/shop/Outerwear">Outerwear</a></li><li><a href="#/shop/Denim">Denim</a></li></ul></div>
  <div><h4>Thrice Loved</h4><ul><li><a href="#/sustainability">Our promise</a></li><li><a href="#/sell">Sell with us</a></li></ul></div>
- <div><h4>Help</h4><ul><li><a href="#/bag">Your bag</a></li><li><a href="#/privacy">Privacy policy</a></li></ul></div>
+ <div><h4>Help</h4><ul><li><a href="#/bag">Your bag</a></li><li><a href="#/contact">Contact us</a></li><li><a href="#/privacy">Privacy policy</a></li></ul></div>
  <div><h4>Join the loop</h4><p style="font-size:.92rem">New arrivals, drops and sustainability tips. No spam.</p><form onsubmit="event.preventDefault();toast('Thanks for subscribing!')"><input type="email" placeholder="you@email.com" required><button class="btn">Subscribe</button></form></div>
 </div><div class="footer__bottom"><span>&copy; 2026 Thrice Loved. Pre-loved, never wasted.</span><span>Test payments via PayPal sandbox &middot; <a href="#/privacy">Privacy</a></span></div></div></footer>`;
 
@@ -496,38 +494,33 @@ ${how('What we do differently',[['Source locally','Pieces come from Auckland clo
 <section class="section section--tight"><div class="container"><span class="eyebrow">Sell with us</span><h1>Turn your wardrobe into store credit</h1><div class="lead"><p>Have good-quality clothes you no longer wear? Send them our way. We photograph, list and pack each piece, and you earn store credit when it sells.</p></div></div></section>
 ${how('How it works',[['Tell us what you have','Fill in the form below with a short description of your items.'],['We review','We reply within 2 business days with what we can accept and the credit on offer.'],['Send or drop off','Post your parcel in reused packaging, or arrange a drop-off in Auckland.'],['Earn credit','When your pieces sell, store credit lands in your account.']])}
 <section class="section section--tight"><div class="container" style="max-width:620px"><h2>Tell us what you would like to sell</h2>
-<form onsubmit="event.preventDefault();toast('Thanks – we will reply within 2 business days.')"><div class="field"><label>Name</label><input type="text" required></div><div class="field"><label>Email</label><input type="email" required></div><div class="field"><label>What would you like to sell?</label><input type="text" placeholder="e.g. 8 tops, 2 coats, 3 pairs of jeans"></div><div class="field"><label>Message</label><textarea></textarea></div><button class="btn">Send message</button></form></div></section>`
+<form onsubmit="event.preventDefault();toast('Thanks – we will reply within 2 business days.')"><div class="field"><label>Name</label><input type="text" required></div><div class="field"><label>Email</label><input type="email" required></div><div class="field"><label>What would you like to sell?</label><input type="text" placeholder="e.g. 8 tops, 2 coats, 3 pairs of jeans"></div><div class="field"><label>Message</label><textarea></textarea></div><button class="btn">Send message</button></form></div></section>`,
 
-contact: () => `
-<section class="section">
-  <div class="container" style="max-width:650px">
-    <h1>Contact Us</h1>
-    <p>Have a question? Get in touch with the Thrice Loved team.</p>
-    <form onsubmit="event.preventDefault();toast('Thank you! Your message has been entered.');">
-      <div class="field">
-        <label>Name</label>
-        <input type="text" name="name" required>
-      </div>
-      <div class="field">
-        <label>Email</label>
-        <input type="email" name="email" required>
-      </div>
-      <div class="field">
-        <label>Subject</label>
-        <input type="text" name="subject" required>
-      </div>
-      <div class="field">
-        <label>Message</label>
-        <textarea name="message" rows="5" required></textarea>
-      </div>
-      <button class="btn" type="submit">Send Message</button>
-    </form>
-    <p id="contact-status" role="status" aria-live="polite"></p>
-  </div>
-</section>
-`,
-
+ contact: () => `
+<section class="section section--tight"><div class="container" style="max-width:700px"><span class="eyebrow">We're here to help</span><h1>Contact us</h1>
+<p class="lead">Have a question about an order, delivery, returns or selling your pre-loved clothes? Send us a message.</p>
+<form onsubmit="sendContact(event)" id="contact-form">
+ <div class="field"><label for="contact-name">Your name</label><input id="contact-name" name="name" type="text" autocomplete="name" required></div>
+ <div class="field"><label for="contact-email">Email address</label><input id="contact-email" name="email" type="email" autocomplete="email" required></div>
+ <div class="field"><label for="contact-subject">Subject</label><select id="contact-subject" name="subject" required><option value="">Choose a subject</option><option>Order enquiry</option><option>Shipping and delivery</option><option>Returns</option><option>Selling clothes</option><option>Other</option></select></div>
+ <div class="field"><label for="contact-message">Your message</label><textarea id="contact-message" name="message" rows="5" required></textarea></div>
+ <button class="btn" type="submit">Send message</button>
+</form>
+<p class="cart__note" style="margin-top:1rem">Thrice Loved is a student test store. Your message opens in your own email app and is not stored on this site. See our <a href="#/privacy">privacy policy</a>.</p>
+</div></section>`
 };
+
+function contactUrl(f){
+  const g = n => (f.elements[n].value || '').trim();
+  const body = 'From: ' + g('name') + ' <' + g('email') + '>\n\n' + g('message');
+  return 'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent('Thrice Loved: ' + g('subject')) + '&body=' + encodeURIComponent(body);
+}
+function sendContact(e){
+  e.preventDefault();
+  gtag('event','contact_submit',{subject:e.target.elements.subject.value});
+  if(CONTACT_EMAIL){ window.location.href = contactUrl(e.target); toast('Opening your email app…'); }
+  else { toast('This is a demo store, so messages are not sent yet.'); }
+}
 
 function toast(msg){ const t=document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3200); }
 function addBag(h){ if(!bag.includes(h)){ bag.push(h); const p=byHandle(h); gtag('event','add_to_cart',{currency:'NZD',value:p.price,items:[{item_id:p.sku,item_name:p.title,price:p.price,quantity:1}]}); } render(); toast('Added to your bag'); }
