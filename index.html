@@ -527,7 +527,7 @@ function addBag(h){ if(!bag.includes(h)){ bag.push(h); const p=byHandle(h); gtag
 // PayPal sandbox Client ID (safe to be public; never put the Secret here):
 const PAYPAL_CLIENT_ID = 'AfYAjpfWcrwaWOp5YGD0ZfwQjTpkAShq3xdT4IBPi5Wialstejs_2SEBJwf-nvA-M60-GgH7x-G-ffc5';
 // Group contact email for privacy requests (shown on the privacy page when set):
-const CONTACT_EMAIL = '';
+const CONTACT_EMAIL = '20160167@gmail.com';
 let lastOrder = '', ppLoading = null;
 const bagItems = () => bag.map(byHandle);
 const bagTotal = () => bagItems().reduce((a,p)=>a+p.price,0);
