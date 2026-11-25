@@ -522,7 +522,7 @@ function sendContact(e){
   else { toast('This is a demo store, so messages are not sent yet.'); }
 }
 
-function toast(msg){ const t=document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3200); }
+function toast(msg){ const t=document.createElement('div'); t.className='toast'; t.setAttribute('role','status'); t.setAttribute('aria-live','polite'); t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3200); }
 function addBag(h){ if(!bag.includes(h)){ bag.push(h); const p=byHandle(h); gtag('event','add_to_cart',{currency:'NZD',value:p.price,items:[{item_id:p.sku,item_name:p.title,price:p.price,quantity:1}]}); } render(); toast('Added to your bag'); }
 // PayPal sandbox Client ID (safe to be public; never put the Secret here):
 const PAYPAL_CLIENT_ID = 'AfYAjpfWcrwaWOp5YGD0ZfwQjTpkAShq3xdT4IBPi5Wialstejs_2SEBJwf-nvA-M60-GgH7x-G-ffc5';
