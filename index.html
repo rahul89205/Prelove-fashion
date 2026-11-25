@@ -528,7 +528,12 @@ function addBag(h){ if(!bag.includes(h)){ bag.push(h); const p=byHandle(h); gtag
 const PAYPAL_CLIENT_ID = 'AfYAjpfWcrwaWOp5YGD0ZfwQjTpkAShq3xdT4IBPi5Wialstejs_2SEBJwf-nvA-M60-GgH7x-G-ffc5';
 // Group contact email for privacy requests (shown on the privacy page when set):
 const CONTACT_EMAIL = '20160167@gmail.com';
-let lastOrder = '', ppLoading = null;
+let lastOrder = '', ppLoading = null, lastCheckoutSig = '';
+// Fire begin_checkout once per bag contents, so repeated taps do not inflate the count.
+function beginCheckout(){
+  const sig = bag.join('|'); if(!sig || sig === lastCheckoutSig) return; lastCheckoutSig = sig;
+  gtag('event','begin_checkout',{currency:'NZD',value:bagTotal(),items:bagItems().map(p=>({item_id:p.sku,item_name:p.title,price:p.price,quantity:1}))});
+}
 const bagItems = () => bag.map(byHandle);
 const bagTotal = () => bagItems().reduce((a,p)=>a+p.price,0);
 function loadPayPal(){
@@ -544,14 +549,14 @@ function mountPayPal(){
     if(!document.getElementById('paypal-buttons')) return;
     paypal.Buttons({
       style:{layout:'vertical',shape:'pill',label:'pay'},
-      onClick:()=>{ gtag('event','begin_checkout',{currency:'NZD',value:bagTotal(),items:bagItems().map(p=>({item_id:p.sku,item_name:p.title,price:p.price,quantity:1}))}); },
+      onClick:()=>{ beginCheckout(); },
       createOrder:(d,a)=>a.order.create({purchase_units:[{description:'Thrice Loved order ('+bag.length+' pre-loved item'+(bag.length>1?'s':'')+')',amount:{currency_code:'NZD',value:bagTotal().toFixed(2)}}]}),
-      onApprove:(d,a)=>a.order.capture().then(o=>{ const items=bagItems(); gtag('event','purchase',{transaction_id:o.id,currency:'NZD',value:bagTotal(),items:items.map(p=>({item_id:p.sku,item_name:p.title,price:p.price,quantity:1}))}); lastOrder=o.id; bag=[]; go('thanks'); }),
+      onApprove:(d,a)=>a.order.capture().then(o=>{ const items=bagItems(); gtag('event','purchase',{transaction_id:o.id,currency:'NZD',value:bagTotal(),items:items.map(p=>({item_id:p.sku,item_name:p.title,price:p.price,quantity:1}))}); lastOrder=o.id; bag=[]; lastCheckoutSig=''; go('thanks'); }),
       onError:()=>toast('Payment could not be completed. Please try again.')
     }).render('#paypal-buttons');
   }).catch(()=>toast('Could not load PayPal. Check your connection or ad blocker.'));
 }
-function checkout(){ gtag('event','begin_checkout',{currency:'NZD',value:bagTotal(),items:bagItems().map(p=>({item_id:p.sku,item_name:p.title,price:p.price,quantity:1}))}); toast('Checkout not connected yet: add a PayPal sandbox Client ID.'); }
+function checkout(){ beginCheckout(); toast('Checkout not connected yet: add a PayPal sandbox Client ID.'); }
 function removeBag(h){ bag = bag.filter(x=>x!==h); render(); }
 
 let route = '', sortMode = 'new';
@@ -567,6 +572,11 @@ function render(){
   const [view, arg] = raw.split('/');
   const v = view || 'home';
   const fn = views[v] || views.home;
+  const T = {home:'Thrice Loved – pre-loved fashion',shop:'Shop all – Thrice Loved',sustainability:'Sustainability – Thrice Loved',sell:'Sell with us – Thrice Loved',contact:'Contact us – Thrice Loved',privacy:'Privacy policy – Thrice Loved',bag:'Your bag – Thrice Loved',thanks:'Order confirmed – Thrice Loved'};
+  let title = T[v] || T.home;
+  if (v === 'shop' && arg === 'new') title = 'New in – Thrice Loved';
+  if (v === 'product' && arg) { const pr = byHandle(decodeURIComponent(arg)); if (pr) title = pr.title + ' – Thrice Loved'; }
+  document.title = title;
   document.getElementById('app').innerHTML = header() + '<main>' + fn(arg ? decodeURIComponent(arg) : undefined) + '</main>' + footer();
   if (v === 'bag') mountPayPal();
 }
