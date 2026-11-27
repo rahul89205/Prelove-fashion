@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#F6F1E7;--ink:#1B1B1B;--primary:#1F3D2F;--accent:#C65D3B;--sand:#E8DCC8;--sage:#A9B8A0}
+:root{--bg:#F6F1E7;--ink:#1B1B1B;--primary:#1F3D2F;--accent:#A94A2B;--sand:#E8DCC8;--sage:#A9B8A0}
 /* ==========================================================================
    Thrice Loved – Shopify theme stylesheet
    Cream / forest green / terracotta palette. Variables are set in theme.liquid.
@@ -46,7 +46,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .btn--ghost{background:transparent;color:var(--primary)}
 .btn--ghost:hover{background:var(--primary);color:#fff}
 .btn--accent{background:var(--accent);border-color:var(--accent)}
-.btn--accent:hover{background:#A94A2B}
+.btn--accent:hover{background:#8F3C21}
 .btn--light{background:var(--bg);color:var(--primary);border-color:var(--bg)}
 .btn--light:hover{background:#fff}
 .btn[disabled]{opacity:.5;cursor:not-allowed;transform:none}
@@ -147,7 +147,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .card__title a:hover{text-decoration:underline}
 .card__meta{margin:.15rem 0 0;font-size:.82rem;color:rgba(0,0,0,.6)}
 .price{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem;margin-top:.35rem;font-weight:600}
-.price__was{font-weight:400;color:rgba(0,0,0,.5);font-size:.88em}
+.price__was{font-weight:400;color:#6a6862;font-size:.88em}
 .price__now{color:var(--ink)}
 .price--sale .price__now{color:var(--accent)}
 
@@ -425,7 +425,7 @@ ${cta()}
    <p style="font-size:.8rem;font-weight:400;color:rgba(0,0,0,.55);margin:.3rem 0 0">Crossed-out price is the estimated price when new.</p></div>
    <div class="chips"><span class="chip">${icon.tag} Condition: ${p.condition}</span><span class="chip">Size ${p.size}</span><span class="chip">${icon.recycle} Pre-loved</span><span class="chip">${icon.heart} One-of-one</span></div>
    <p class="stock-note">Only 1 available – once it is gone, it is gone.</p>
-   <div class="product__buy"><div class="field"><label>Size</label><select disabled><option>${p.size}</option></select></div>
+   <div class="product__buy"><div class="field"><label for="size-sel">Size</label><select id="size-sel" disabled><option>${p.size}</option></select></div>
    ${inBag?`<a class="btn btn--block" href="#/bag">View bag and check out</a>`:`<button class="btn btn--block" onclick="addBag('${p.handle}')">Add to bag</button>`}</div>
    <div class="product__eco">${icon.leaf}<p><strong>Saved from landfill</strong><br>Buying this pre-loved piece extends the life of a garment that already exists. It ships in recycled, plastic-free packaging.</p></div>
    <div class="accordion"><details open><summary>Details</summary><div class="accordion__body">${p.body}</div></details>
@@ -498,7 +498,7 @@ ${how('What we do differently',[['Source locally','Pieces come from Auckland clo
 <section class="section section--tight"><div class="container"><span class="eyebrow">Sell with us</span><h1>Turn your wardrobe into store credit</h1><div class="lead"><p>Have good-quality clothes you no longer wear? Send them our way. We photograph, list and pack each piece, and you earn store credit when it sells.</p></div></div></section>
 ${how('How it works',[['Tell us what you have','Fill in the form below with a short description of your items.'],['We review','We reply within 2 business days with what we can accept and the credit on offer.'],['Send or drop off','Post your parcel in reused packaging, or arrange a drop-off in Auckland.'],['Earn credit','When your pieces sell, store credit lands in your account.']])}
 <section class="section section--tight"><div class="container" style="max-width:620px"><h2>Tell us what you would like to sell</h2>
-<form onsubmit="event.preventDefault();toast('Thanks – we will reply within 2 business days.')"><div class="field"><label>Name</label><input type="text" required></div><div class="field"><label>Email</label><input type="email" required></div><div class="field"><label>What would you like to sell?</label><input type="text" placeholder="e.g. 8 tops, 2 coats, 3 pairs of jeans"></div><div class="field"><label>Message</label><textarea></textarea></div><button class="btn">Send message</button></form></div></section>`,
+<form onsubmit="event.preventDefault();toast('Thanks – we will reply within 2 business days.')"><div class="field"><label for="sell-name">Name</label><input id="sell-name" type="text" required></div><div class="field"><label for="sell-email">Email</label><input id="sell-email" type="email" required></div><div class="field"><label for="sell-items">What would you like to sell?</label><input id="sell-items" type="text" placeholder="e.g. 8 tops, 2 coats, 3 pairs of jeans"></div><div class="field"><label for="sell-msg">Message</label><textarea id="sell-msg"></textarea></div><button class="btn">Send message</button></form></div></section>`,
 
  contact: () => `
 <section class="section section--tight"><div class="container" style="max-width:700px"><span class="eyebrow">We're here to help</span><h1>Contact us</h1>
