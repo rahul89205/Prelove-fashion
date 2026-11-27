@@ -220,6 +220,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 @media (min-width:900px){.product{grid-template-columns:1.15fr .85fr;gap:64px;padding-top:48px}.product__info{position:sticky;top:100px;align-self:start}}
 .gallery__main{border-radius:20px;overflow:hidden;background:var(--sand);aspect-ratio:4/5}
 .gallery__main img{width:100%;height:100%;object-fit:cover}
+@media (max-width:899px){.gallery__main{aspect-ratio:1/1}}
 .gallery__thumbs{display:flex;gap:10px;margin-top:12px;overflow-x:auto}
 .gallery__thumb{flex:none;width:76px;aspect-ratio:4/5;border-radius:10px;overflow:hidden;border:2px solid transparent;padding:0;background:var(--sand);cursor:pointer}
 .gallery__thumb[aria-current="true"]{border-color:var(--primary)}
@@ -273,6 +274,9 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .cart__summary{margin-top:28px;display:grid;gap:14px}
 .cart__total{display:flex;justify-content:space-between;font-size:1.25rem;font-weight:600}
 .cart__note{font-size:.88rem;color:rgba(0,0,0,.65)}
+.cart__step{margin:1rem 0 .7rem;font-size:1rem}
+.filters__label{width:100%;margin:0;font-weight:600;font-size:.95rem}
+.toolbar__label{font-size:.9rem;font-weight:600}
 @media (min-width:900px){
   .cart__layout{display:grid;grid-template-columns:1.6fr 1fr;gap:56px;align-items:start}
   .cart__summary{margin-top:20px;background:#fff;border-radius:20px;padding:24px;border:1px solid rgba(0,0,0,.07);position:sticky;top:100px}
@@ -405,9 +409,9 @@ ${cta()}
    if (sort === 'low') list.sort((a,b)=>a.price-b.price); else if (sort === 'high') list.sort((a,b)=>b.price-a.price);
    const types = [...new Set(P.map(p=>p.type))];
    return `<div class="container"><header class="collection-head"><h1>${title}</h1><p>Every piece is one-of-one. When it's gone, it's gone.</p></header>
-   <div class="toolbar"><div class="filters"><a class="filter summary" style="text-decoration:none"></a>${['All',...types].map(t=>`<a class="btn ${((arg||'All')===t)?'':'btn--ghost'}" style="padding:.4rem .9rem;font-size:.85rem" href="#/shop${t==='All'?'':'/'+t}">${t}</a>`).join('')}</div>
+   <div class="toolbar"><div class="filters" role="group" aria-labelledby="cat-label"><p class="filters__label" id="cat-label">Browse by category</p>${['All',...types].map(t=>`<a class="btn ${((arg||'All')===t)?'':'btn--ghost'}" style="padding:.4rem .9rem;font-size:.85rem" href="#/shop${t==='All'?'':'/'+t}">${t}</a>`).join('')}</div>
    <span class="toolbar__count">${list.length} pieces</span>
-   <div class="toolbar__controls"><select onchange="sortMode=this.value;render()" aria-label="Sort"><option value="new" ${sort==='new'?'selected':''}>Newest</option><option value="low" ${sort==='low'?'selected':''}>Price: low to high</option><option value="high" ${sort==='high'?'selected':''}>Price: high to low</option></select></div></div>
+   <div class="toolbar__controls"><label for="sortsel" class="toolbar__label">Sort by</label><select id="sortsel" onchange="sortMode=this.value;render()"><option value="new" ${sort==='new'?'selected':''}>Newest</option><option value="low" ${sort==='low'?'selected':''}>Price: low to high</option><option value="high" ${sort==='high'?'selected':''}>Price: high to low</option></select></div></div>
    ${grid(list)}<div style="height:72px"></div></div>`;
  },
 
@@ -419,10 +423,10 @@ ${cta()}
    <div class="product__info"><p class="product__vendor">Thrice Loved</p><h1 class="product__title">${p.title}</h1>
    <div class="product__price"><div class="price price--sale"><span class="price__now">${money(p.price)}</span><s class="price__was">${money(p.was)}</s><span class="save-pill">${pct(p)}% off new</span></div>
    <p style="font-size:.8rem;font-weight:400;color:rgba(0,0,0,.55);margin:.3rem 0 0">Crossed-out price is the estimated price when new.</p></div>
-   <div class="chips"><span class="chip">${icon.tag} Condition: ${p.condition}</span><span class="chip">${icon.recycle} Pre-loved</span><span class="chip">${icon.heart} One-of-one</span></div>
+   <div class="chips"><span class="chip">${icon.tag} Condition: ${p.condition}</span><span class="chip">Size ${p.size}</span><span class="chip">${icon.recycle} Pre-loved</span><span class="chip">${icon.heart} One-of-one</span></div>
    <p class="stock-note">Only 1 available – once it is gone, it is gone.</p>
    <div class="product__buy"><div class="field"><label>Size</label><select disabled><option>${p.size}</option></select></div>
-   <button class="btn btn--block" ${inBag?'disabled':''} onclick="addBag('${p.handle}')">${inBag?'In your bag':'Add to bag'}</button></div>
+   ${inBag?`<a class="btn btn--block" href="#/bag">View bag and check out</a>`:`<button class="btn btn--block" onclick="addBag('${p.handle}')">Add to bag</button>`}</div>
    <div class="product__eco">${icon.leaf}<p><strong>Saved from landfill</strong><br>Buying this pre-loved piece extends the life of a garment that already exists. It ships in recycled, plastic-free packaging.</p></div>
    <div class="accordion"><details open><summary>Details</summary><div class="accordion__body">${p.body}</div></details>
    <details><summary>Condition guide</summary><div class="accordion__body"><p><strong>Like new:</strong> worn once or twice, no visible wear.</p><p><strong>Excellent:</strong> lightly worn with minor signs of use only.</p><p><strong>Good:</strong> clearly worn but sound. Any flaws are described in the details.</p></div></details>
@@ -437,7 +441,7 @@ ${cta()}
    <li class="cart__item"><a href="#/product/${p.handle}"><img src="${p.img}" alt=""></a><div><a href="#/product/${p.handle}" style="font-weight:600;text-decoration:none">${p.title}</a><p class="card__meta">Size ${p.size}</p><div class="price"><span class="price__now">${money(p.price)}</span></div></div>
    <div class="cart__line"><span class="cart__qty" style="padding:.5rem 0">Qty 1</span><button class="link cart__remove" onclick="removeBag('${p.handle}')">Remove</button><strong>${money(p.price)}</strong></div></li>`).join('')}</ul>
    <div class="cart__summary"><div class="cart__total"><span>Subtotal</span><span>${money(total)}</span></div><p class="cart__note">Taxes included where applicable. Shipping is calculated at checkout.</p>
-   ${PAYPAL_CLIENT_ID ? `<div id="paypal-buttons" aria-label="Pay with PayPal"></div><p class="cart__note">Test mode: this store uses the PayPal sandbox, so no real money is charged.</p>` : `<button class="btn btn--accent btn--block" onclick="checkout()">Checkout</button>`}
+   ${PAYPAL_CLIENT_ID ? `<p class="cart__step"><strong>Next step:</strong> choose a payment option below to check out.</p><div id="paypal-buttons" aria-label="Pay with PayPal"></div><p class="cart__note">Test mode: this store uses the PayPal sandbox, so no real money is charged.</p>` : `<button class="btn btn--accent btn--block" onclick="checkout()">Checkout</button>`}
    <p class="cart__note" style="display:flex;gap:.5rem;align-items:center;margin:0"><span style="width:20px;color:var(--primary)">${icon.box}</span>Ships in recycled, plastic-free packaging.</p></div></div></div>`;
  },
 
